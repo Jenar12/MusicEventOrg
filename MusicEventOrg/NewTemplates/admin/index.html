@@ -1,0 +1,18 @@
+{% extends "material/admin/index.html" %}
+
+{% block content %}
+{{ block.super }}
+
+<div class="card">
+    <div class="card-content">
+        <h2>Welcome to MusicEventOrg Admin Portal</h2>
+        <ul>
+            <li><strong>Total Events:</strong> {{ total_events }}</li>
+            <li><strong>Total Tickets Sold:</strong> {{ total_tickets_sold }}</li>
+            <li><strong>Total Performers:</strong> {{ total_performers }}</li>
+            <li><strong>Total Festivals:</strong> {{ total_festivals }}</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+

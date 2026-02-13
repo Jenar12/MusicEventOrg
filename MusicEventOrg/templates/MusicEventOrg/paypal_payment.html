@@ -1,0 +1,14 @@
+<!-- templates/paypal_payment.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pay with PayPal</title>
+</head>
+<body>
+    <form id="paypal_form" action="{% url 'initiate_paypal_payment' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="ticket_id" value="{{ ticket_id }}">
+        <button type="submit">Pay with PayPal</button>
+    </form>
+</body>
+</html>

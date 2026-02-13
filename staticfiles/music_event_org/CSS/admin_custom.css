@@ -1,0 +1,81 @@
+/* Customize the header */
+#header {
+    background-color: #673ab7; /* Deep purple */
+    color: white;
+    padding: 10px;
+}
+
+#header h1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Customize sidebar modules */
+.module h2, .module caption, .inline-group h2 {
+    background-color: #5e35b1; /* Darker purple */
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.module ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.module li {
+    margin: 5px 0;
+}
+
+/* Customize buttons */
+.button, input[type="submit"], .submit-row input {
+    background-color: #ff9800; /* Orange */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.button:hover, input[type="submit"]:hover, .submit-row input:hover {
+    background-color: #e65100; /* Darker orange */
+}
+
+/* Customize tables */
+.change-list .results {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+}
+
+.change-list th, .change-list td {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Add hover effect to table rows */
+.change-list tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Dark mode */
+body {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+#header {
+    background-color: #1e1e1e;
+}
+
+.module h2, .module caption, .inline-group h2 {
+    background-color: #333333;
+}
+
+.change-list .results {
+    background-color: #1e1e1e;
+}
+
+.change-list th, .change-list td {
+    border-color: #444444;
+}

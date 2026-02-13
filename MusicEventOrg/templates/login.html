@@ -1,0 +1,49 @@
+﻿{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card bg-dark border-secondary shadow-lg">
+                <div class="card-header border-secondary bg-primary bg-opacity-10 py-3">
+                    <h2 class="h4 mb-0 fw-bold text-white text-center">Login</h2>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.non_field_errors %}
+                            {{ error }}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="id_username"
+                                class="form-label text-primary fw-bold small text-uppercase">Username</label>
+                            <input type="text" name="username" class="form-control" id="id_username" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="id_password"
+                                class="form-label text-primary fw-bold small text-uppercase">Password</label>
+                            <input type="password" name="password" class="form-control" id="id_password" required>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold">Sign In</button>
+                        </div>
+                    </form>
+                    <div class="text-center mt-4">
+                        <p class="text-secondary small">Don't have an account? <a href="{% url 'register' %}"
+                                class="text-primary text-decoration-none">Register here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

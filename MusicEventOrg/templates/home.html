@@ -1,0 +1,170 @@
+﻿{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero"
+    style="background: url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover; padding: 100px 0;">
+    <div class="hero-overlay" style="background: rgba(0,0,0,0.6);"></div>
+    <div class="container position-relative z-index-1">
+        <div class="row align-items-center">
+            <div class="col-md-7 text-white reveal-up active">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="fas fa-microphone-alt fa-2x me-3 text-primary"></i>
+                    <span class="text-uppercase fw-bold tracking-widest" style="letter-spacing: 2px;">Featured
+                        Event</span>
+                </div>
+                <h1 class="display-1 fw-bold mb-4" style="letter-spacing: -3px; line-height: 1;">Lovers at Patan</h1>
+                <p class="fs-5 mb-4" style="line-height: 1.6;"><i class="far fa-calendar-alt me-2 text-primary"></i>
+                    Sat, 14 Feb <span class="ms-4"><i class="fas fa-map-marker-alt me-2 text-primary"></i> Patan Museum,
+                        Lalitpur</span></p>
+                <div class="countdown-timer d-flex gap-3 mb-5">
+                    <div class="timer-unit bg-primary bg-opacity-75 p-3 rounded text-center" style="min-width: 80px;">
+                        <span class="d-block h3 fw-bold mb-0">06</span>
+                        <small class="text-uppercase small">Days</small>
+                    </div>
+                    <div class="timer-unit bg-primary bg-opacity-75 p-3 rounded text-center" style="min-width: 80px;">
+                        <span class="d-block h3 fw-bold mb-0">02</span>
+                        <small class="text-uppercase small">Hours</small>
+                    </div>
+                    <div class="timer-unit bg-primary bg-opacity-75 p-3 rounded text-center" style="min-width: 80px;">
+                        <span class="d-block h3 fw-bold mb-0">21</span>
+                        <small class="text-uppercase small">Mins</small>
+                    </div>
+                </div>
+                <div class="d-flex gap-3">
+                    <a href="#events-section" class="btn btn-outline-light btn-lg px-5 fw-bold">VIEW DETAILS</a>
+                    <a href="#events-section" class="btn btn-warning btn-lg px-5 fw-bold text-dark">BUY TICKET</a>
+                </div>
+            </div>
+        </div>
+</section>
+
+<!-- Search Area -->
+<div class="container mt-n5 position-relative z-index-2 reveal-scale">
+    <div class="bg-white p-4 shadow-sm rounded">
+        <div class="row g-3">
+            <div class="col-md-10">
+                <div class="input-group input-group-lg">
+                    <input type="text" class="form-control border-0" placeholder="Search by event/city"
+                        style="background: #f8f9fa;">
+                    <span class="input-group-text bg-white border-0"><i class="fas fa-search text-danger"></i></span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-dark btn-lg w-100">SEARCH</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Categories Section -->
+<section class="section" id="events-section">
+    <div class="container">
+        <h2 class="h3 fw-bold mb-4 reveal-up">Select Events</h2>
+        <div class="d-flex gap-2 overflow-auto pb-3 mb-4 filter-buttons" style="scrollbar-width: thin;">
+            <button class="btn btn-danger px-4 active" data-filter="all">All</button>
+            <button class="btn btn-outline-secondary px-4" data-filter="Music">Music</button>
+            <button class="btn btn-outline-secondary px-4" data-filter="Festival">Festival</button>
+            <button class="btn btn-outline-secondary px-4" data-filter="Sports">Sports</button>
+            <button class="btn btn-outline-secondary px-4" data-filter="Workshop">Workshop</button>
+        </div>
+
+        <div class="event-slider">
+            {% for event in events %}
+            <div class="event-item reveal-up" data-category="Music Festival {{ event.title }} {{ event.description }}">
+                <div class="card border-0 shadow-lg h-100">
+                    <div class="position-relative overflow-hidden">
+                        {% if event.image %}
+                        <img src="{{ event.image.url }}" class="card-img-top" alt="{{ event.title }}"
+                            style="height: 240px; object-fit: cover;">
+                        {% else %}
+                        <div class="bg-light d-flex align-items-center justify-content-center border-bottom"
+                            style="height: 240px;">
+                            <i class="fas fa-music fa-3x text-muted opacity-30"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="card-body p-4">
+                        <h3 class="h5 fw-bold mb-3">{{ event.title }}</h3>
+
+                        <div class="d-flex flex-column gap-2 mb-4">
+                            <div class="small text-secondary d-flex align-items-center">
+                                <i class="far fa-calendar-alt me-2 text-danger"></i>
+                                <span>{{ event.date|date:"D, j M, Y" }}</span>
+                            </div>
+                            <div class="small text-secondary d-flex align-items-center">
+                                <i class="fas fa-map-marker-alt me-2 text-danger"></i>
+                                <span>{{ event.venue.name }}, {{ event.venue.address }}</span>
+                            </div>
+                            <div class="small text-secondary d-flex align-items-center">
+                                <i class="fas fa-tag me-2 text-success"></i>
+                                <span class="fw-bold">Rs. {{ event.price }}</span>
+                            </div>
+                        </div>
+
+                        <a href="{% url 'event_details' event.id %}"
+                            class="btn btn-success btn-lg w-100 fw-bold mt-auto">BUY TICKETS</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <p class="text-muted fs-4">No upcoming events found.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Reveal on Scroll
+        const reveals = document.querySelectorAll('.reveal-up, .reveal-scale');
+
+        function reveal() {
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    el.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', reveal);
+        reveal(); // Initial check
+
+        // Filtering Logic
+        const filterBtns = document.querySelectorAll('.filter-buttons button');
+        const items = document.querySelectorAll('.event-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // UI Update
+                filterBtns.forEach(b => {
+                    b.classList.remove('btn-danger', 'active');
+                    b.classList.add('btn-outline-secondary');
+                });
+                btn.classList.add('btn-danger', 'active');
+                btn.classList.remove('btn-outline-secondary');
+
+                const filter = btn.getAttribute('data-filter');
+
+                items.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category').toLowerCase().includes(filter.toLowerCase())) {
+                        item.style.display = 'block';
+                        setTimeout(() => item.classList.add('active'), 50);
+                    } else {
+                        item.style.display = 'none';
+                        item.classList.remove('active');
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}
