@@ -1,4 +1,4 @@
-﻿{% extends "base.html" %}
+{% extends "base.html" %}
 {% load static %}
 
 {% block content %}
@@ -25,8 +25,7 @@
                     style="color: var(--primary-color); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem;">
                     Upcoming Event
                 </span>
-                <h1 style="font-size: 3.5rem; font-weight: 900; margin: 0.5rem 0 1.5rem; line-height: 1.1;">{{
-                    event.title }}</h1>
+                <h1 style="font-size: 3.5rem; font-weight: 900; margin: 0.5rem 0 1.5rem; line-height: 1.1;">{{ event.title }}</h1>
 
                 <div
                     style="display: flex; gap: 2rem; margin-bottom: 2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 2rem;">
@@ -38,8 +37,7 @@
                         <div>
                             <span style="display: block; font-size: 0.9rem; color: var(--text-muted);">Date &
                                 Time</span>
-                            <span style="font-weight: 600;">{{ event.date|date:"F j, Y" }} <br> {{ event.date|date:"g:i
-                                A" }}</span>
+                            <span style="font-weight: 600;">{{ event.date|date:"F j, Y" }}<br>{{ event.date|date:"g:i A" }}</span>
                         </div>
                     </div>
                     <div style="display: flex; align-items: center; gap: 1rem;">
@@ -66,15 +64,14 @@
                     <div>
                         <span style="display: block; color: var(--text-muted); margin-bottom: 0.5rem;">Ticket
                             Price</span>
-                        <span style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color);">Rs. {{
-                            event.price }}</span>
+                        <span style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color);">Rs. {{ event.price }}</span>
                     </div>
                     {% if user.is_authenticated %}
-                    <a href="{% url 'ticket_booking' event.id %}" class="btn btn-primary" style="padding: 1.2rem 3rem;">
+                    <a href="{% url 'ticket_booking' event.id %}" class="btn btn-primary btn-clickable" style="padding: 1.2rem 3rem; cursor: pointer !important; z-index: 100 !important; position: relative !important; pointer-events: auto !important;">
                         Book Now
                     </a>
                     {% else %}
-                    <a href="{% url 'login' %}?next={% url 'ticket_booking' event.id %}" class="btn btn-primary">
+                    <a href="{% url 'login' %}?next={% url 'ticket_booking' event.id %}" class="btn btn-primary btn-clickable" style="padding: 1.2rem 3rem; cursor: pointer !important; z-index: 100 !important; position: relative !important; pointer-events: auto !important;">
                         Login to Book
                     </a>
                     {% endif %}

@@ -1,4 +1,4 @@
-﻿{% extends "base.html" %}
+{% extends "base.html" %}
 {% load static %}
 
 {% block content %}
@@ -11,30 +11,48 @@
             <div class="col-md-7 text-white reveal-up active">
                 <div class="d-flex align-items-center mb-3">
                     <i class="fas fa-microphone-alt fa-2x me-3 text-primary"></i>
-                    <span class="text-uppercase fw-bold tracking-widest" style="letter-spacing: 2px;">Featured
-                        Event</span>
+                    <span class="text-uppercase fw-bold tracking-widest" style="letter-spacing: 2px;">Featured Event</span>
                 </div>
+                {% if featured_event %}
+                <h1 class="display-1 fw-bold mb-4" style="letter-spacing: -3px; line-height: 1;">{{ featured_event.title }}</h1>
+                <p class="fs-5 mb-4" style="line-height: 1.6;">
+                    <i class="far fa-calendar-alt me-2 text-primary"></i>
+                    {{ featured_event.date|date:"D, j M" }} <span class="ms-4"><i class="fas fa-map-marker-alt me-2 text-primary"></i> {{ featured_event.venue.name }}, {{ featured_event.venue.address }}</span>
+                </p>
+                <div id="hero-countdown" class="countdown-timer d-flex gap-3 mb-5" data-countdown-to="{{ featured_event_iso }}">
+                {% else %}
                 <h1 class="display-1 fw-bold mb-4" style="letter-spacing: -3px; line-height: 1;">Lovers at Patan</h1>
-                <p class="fs-5 mb-4" style="line-height: 1.6;"><i class="far fa-calendar-alt me-2 text-primary"></i>
-                    Sat, 14 Feb <span class="ms-4"><i class="fas fa-map-marker-alt me-2 text-primary"></i> Patan Museum,
-                        Lalitpur</span></p>
-                <div class="countdown-timer d-flex gap-3 mb-5">
+                <p class="fs-5 mb-4" style="line-height: 1.6;">
+                    <i class="far fa-calendar-alt me-2 text-primary"></i>
+                    Sat, 14 Feb <span class="ms-4"><i class="fas fa-map-marker-alt me-2 text-primary"></i> Patan Museum, Lalitpur</span>
+                </p>
+                <div id="hero-countdown" class="countdown-timer d-flex gap-3 mb-5" data-countdown-to="2026-02-14T18:00:00+05:45">
+                {% endif %}
                     <div class="timer-unit bg-primary bg-opacity-75 p-3 rounded text-center" style="min-width: 80px;">
-                        <span class="d-block h3 fw-bold mb-0">06</span>
+                        <span id="countdown-days" class="d-block h3 fw-bold mb-0">00</span>
                         <small class="text-uppercase small">Days</small>
                     </div>
                     <div class="timer-unit bg-primary bg-opacity-75 p-3 rounded text-center" style="min-width: 80px;">
-                        <span class="d-block h3 fw-bold mb-0">02</span>
+                        <span id="countdown-hours" class="d-block h3 fw-bold mb-0">00</span>
                         <small class="text-uppercase small">Hours</small>
                     </div>
                     <div class="timer-unit bg-primary bg-opacity-75 p-3 rounded text-center" style="min-width: 80px;">
-                        <span class="d-block h3 fw-bold mb-0">21</span>
+                        <span id="countdown-mins" class="d-block h3 fw-bold mb-0">00</span>
                         <small class="text-uppercase small">Mins</small>
+                    </div>
+                    <div class="timer-unit bg-primary bg-opacity-75 p-3 rounded text-center" style="min-width: 80px;">
+                        <span id="countdown-secs" class="d-block h3 fw-bold mb-0">00</span>
+                        <small class="text-uppercase small">Secs</small>
                     </div>
                 </div>
                 <div class="d-flex gap-3">
+                    {% if featured_event %}
+                    <a href="{% url 'event_details' featured_event.id %}" class="btn btn-outline-light btn-lg px-5 fw-bold">VIEW DETAILS</a>
+                    <a href="{% url 'event_details' featured_event.id %}#book" class="btn btn-warning btn-lg px-5 fw-bold text-dark">BUY TICKET</a>
+                    {% else %}
                     <a href="#events-section" class="btn btn-outline-light btn-lg px-5 fw-bold">VIEW DETAILS</a>
                     <a href="#events-section" class="btn btn-warning btn-lg px-5 fw-bold text-dark">BUY TICKET</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -63,11 +81,11 @@
     <div class="container">
         <h2 class="h3 fw-bold mb-4 reveal-up">Select Events</h2>
         <div class="d-flex gap-2 overflow-auto pb-3 mb-4 filter-buttons" style="scrollbar-width: thin;">
-            <button class="btn btn-danger px-4 active" data-filter="all">All</button>
-            <button class="btn btn-outline-secondary px-4" data-filter="Music">Music</button>
-            <button class="btn btn-outline-secondary px-4" data-filter="Festival">Festival</button>
-            <button class="btn btn-outline-secondary px-4" data-filter="Sports">Sports</button>
-            <button class="btn btn-outline-secondary px-4" data-filter="Workshop">Workshop</button>
+            <button type="button" class="btn btn-danger px-4 active filter-btn" data-filter="all" style="cursor: pointer !important; pointer-events: auto !important; z-index: 10 !important; position: relative !important;">All</button>
+            <button type="button" class="btn btn-outline-secondary px-4 filter-btn" data-filter="Music" style="cursor: pointer !important; pointer-events: auto !important; z-index: 10 !important; position: relative !important;">Music</button>
+            <button type="button" class="btn btn-outline-secondary px-4 filter-btn" data-filter="Festival" style="cursor: pointer !important; pointer-events: auto !important; z-index: 10 !important; position: relative !important;">Festival</button>
+            <button type="button" class="btn btn-outline-secondary px-4 filter-btn" data-filter="Sports" style="cursor: pointer !important; pointer-events: auto !important; z-index: 10 !important; position: relative !important;">Sports</button>
+            <button type="button" class="btn btn-outline-secondary px-4 filter-btn" data-filter="Workshop" style="cursor: pointer !important; pointer-events: auto !important; z-index: 10 !important; position: relative !important;">Workshop</button>
         </div>
 
         <div class="event-slider">
@@ -121,6 +139,37 @@
 {% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        // Real-time countdown: days, hours, minutes, seconds
+        var countdownEl = document.getElementById('hero-countdown');
+        if (countdownEl) {
+            var toStr = countdownEl.getAttribute('data-countdown-to');
+            if (toStr) {
+                function pad(n) { return n < 10 ? '0' + n : n; }
+                function updateCountdown() {
+                    var target = new Date(toStr.replace(' ', 'T'));
+                    var now = new Date();
+                    var diff = target - now;
+                    if (diff <= 0) {
+                        document.getElementById('countdown-days').textContent = '00';
+                        document.getElementById('countdown-hours').textContent = '00';
+                        document.getElementById('countdown-mins').textContent = '00';
+                        document.getElementById('countdown-secs').textContent = '00';
+                        return;
+                    }
+                    var secs = Math.floor((diff / 1000) % 60);
+                    var mins = Math.floor((diff / 60000) % 60);
+                    var hours = Math.floor((diff / 3600000) % 24);
+                    var days = Math.floor(diff / 86400000);
+                    document.getElementById('countdown-days').textContent = pad(days);
+                    document.getElementById('countdown-hours').textContent = pad(hours);
+                    document.getElementById('countdown-mins').textContent = pad(mins);
+                    document.getElementById('countdown-secs').textContent = pad(secs);
+                }
+                updateCountdown();
+                setInterval(updateCountdown, 1000);
+            }
+        }
+
         // Reveal on Scroll
         const reveals = document.querySelectorAll('.reveal-up, .reveal-scale');
 

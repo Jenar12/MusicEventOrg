@@ -165,7 +165,13 @@ def api_logout(request):
 
 def home(request):
     events = Event.objects.filter(date__gte=timezone.now()).order_by('date')[:6]
-    return render(request, 'home.html', {'events': events})
+    featured_event = events.first()  # First upcoming event for hero countdown
+    featured_event_iso = featured_event.date.isoformat() if featured_event else None
+    return render(request, 'home.html', {
+        'events': events,
+        'featured_event': featured_event,
+        'featured_event_iso': featured_event_iso,
+    })
 
 
 def event_details(request, event_id):
@@ -237,6 +243,7 @@ def add_event(request):
 
 
 def login_view(request):
+    next_url = request.GET.get('next') or request.POST.get('next', '')
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -244,11 +251,14 @@ def login_view(request):
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user is not None:
-                auth_login(request, user)  # Log the user in
-                return redirect('home')  # Redirect to the home page after login
+                auth_login(request, user)
+                # Redirect to 'next' if it's a safe relative path
+                if next_url and next_url.startswith('/') and '//' not in next_url:
+                    return redirect(next_url)
+                return redirect('home')
     else:
         form = AuthenticationForm()
-    return render(request, 'login.html', {'form':form})
+    return render(request, 'login.html', {'form': form, 'next': next_url})
 
 
 def register(request):

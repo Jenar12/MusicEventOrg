@@ -1,4 +1,4 @@
-﻿{% extends "base.html" %}
+{% extends "base.html" %}
 {% load static %}
 
 {% block content %}
@@ -12,6 +12,7 @@
                 <div class="card-body p-4">
                     <form method="post" class="needs-validation" novalidate>
                         {% csrf_token %}
+                        {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
 
                         {% if form.non_field_errors %}
                         <div class="alert alert-danger">
